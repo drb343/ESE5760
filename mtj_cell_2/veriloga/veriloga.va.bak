@@ -1,0 +1,139 @@
+`include "constants.vams"
+`include "disciplines.vams"
+
+module mtj_pma(T1, T2, STATE);
+inout T1, T2;
+output STATE;
+
+electrical T1, T2, STATE;
+
+// ================= PARAMETERS =================
+parameter real Rp  = 5k;
+parameter real Rap = 10k;
+
+parameter real Ic = 250u;
+
+// deterministic delay scaling
+parameter real tau0 = 2n;
+
+// stochastic time constant
+parameter real tau_prob = 100n;
+
+// ================= VARIABLES =================
+
+// FSM:
+// 0 = P
+// 1 = switching PAP
+// 2 = AP
+// 3 = switching APP
+integer state;
+
+real Rmtj;
+real Imtj;
+
+// timing
+real t_switch_start;
+real tau_dyn;
+
+// stochastic
+real t_rand_switch;
+real r;
+integer seed;
+integer waiting;
+
+// ================= MODEL =================
+analog begin
+
+    @(initial_step) begin
+        state = 0;
+        waiting = 0;
+        seed = 12345;
+    end
+
+    // -------- CURRENT --------
+    Imtj = I(T1, T2);
+
+    // =====================================================
+    // -------- REGION 1: I > Ic (DETERMINISTIC) ------------
+    // =====================================================
+    if (abs(Imtj) > Ic) begin
+
+        // dynamic delay
+        tau_dyn = tau0 * Ic / (abs(Imtj) - Ic);
+
+        waiting = 0;
+
+        // start switching
+        if (state == 0 && Imtj > Ic) begin
+            state = 1;
+            t_switch_start = $abstime;
+        end
+
+        if (state == 2 && Imtj < -Ic) begin
+            state = 3;
+            t_switch_start = $abstime;
+        end
+
+        // complete switching
+        if (state == 1 && ($abstime - t_switch_start) > tau_dyn)
+            state = 2;
+
+        if (state == 3 && ($abstime - t_switch_start) > tau_dyn)
+            state = 0;
+    end
+
+    // =====================================================
+    // -------- REGION 2: I < Ic (STOCHASTIC) ---------------
+    // =====================================================
+    else begin
+
+        // only in stable states
+        if (state == 0 || state == 2) begin
+
+            // generate ONE switching attempt
+            if (waiting == 0) begin
+                r = $rdist_uniform(seed, 0.0, 1.0);
+
+                // avoid log(0)
+                if (r < 1e-6)
+                    r = 1e-6;
+
+                t_rand_switch = -tau_prob * ln(r);
+
+                t_switch_start = $abstime;
+                waiting = 1;
+            end
+
+            // check if switching happens
+            if (($abstime - t_switch_start) > t_rand_switch) begin
+                if (state == 0)
+                    state = 2;
+                else
+                    state = 0;
+
+                waiting = 0;
+            end
+        end
+    end
+
+    // =====================================================
+    // -------- RESISTANCE ----------------------------------
+    // =====================================================
+    if (state == 0)
+        Rmtj = Rp;
+    else if (state == 2)
+        Rmtj = Rap;
+    else
+        Rmtj = (Rp + Rap)/2;
+
+    // =====================================================
+    // -------- ELECTRICAL ----------------------------------
+    // =====================================================
+    V(T1, T2) <+ Imtj * Rmtj;
+
+    // digital-like output
+    V(STATE) <+ (state == 2 ? 1 : 0);
+
+end
+
+endmodule

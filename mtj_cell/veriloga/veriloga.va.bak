@@ -1,0 +1,9 @@
+// VerilogA for ESE5760, mtj_cell, veriloga
+
+`include "constants.vams"
+`include "disciplines.vams"
+
+module mtj_cell;
+
+
+endmodule

@@ -1,0 +1,44 @@
+// VerilogA for ESE5760, initial_mtj, veriloga
+
+`include "constants.vams"
+`include "disciplines.vams"
+
+module Initial(x,y,z);
+
+electrical x,y,z;
+integer seed;
+real RandomTheta, volume, std_dev;
+
+parameter real kb = 1.38e-16 from (-inf:inf);//Boltzmann's constant
+parameter T = 300 from (-inf:inf);//Temperature
+parameter real Ms = 1050 from (0:inf);
+parameter real Hk = 250 from (0:inf);
+parameter real length = 60e-7 from (0:inf);
+parameter real width = 60e-7 from (0:inf);
+parameter real thickness = 1e-7 from (0:inf);
+
+
+analog begin	
+	volume = length*width*thickness;
+	std_dev=sqrt(kb*T/(Ms*volume*Hk));//standard deviation of theta
+
+	if(analysis("ic")) 
+		begin
+			//This defines the initial conditions for the   magnetization vector
+			//fixed
+			/*V(x) <+ 0;
+			V(y) <+ 0.3;
+			V(z) <+ sqrt(1 - 0.3*0.3);*/
+
+			//random
+			seed=4;
+			RandomTheta=$rdist_normal(seed, 0, std_dev);
+			V(x) <+ 0;
+			V(y) <+ sin(RandomTheta);
+			V(z) <+ cos(RandomTheta);
+		end
+	else if(analysis("tran")) begin
+
+	end
+end
+endmodule

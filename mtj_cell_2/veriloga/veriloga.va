@@ -1,0 +1,77 @@
+`include "constants.vams"
+`include "disciplines.vams"
+
+module mtj_pma(T1, T2, STATE);
+inout T1, T2;
+output STATE;
+
+electrical T1, T2, STATE;
+
+// ================= PARAMETERS =================
+
+// Resistances
+parameter real Rp  = 5k;
+parameter real Rap = 10k;
+
+// Switching thresholds
+parameter real Vc_pos = 0.3;
+parameter real Vc_neg = -0.3;
+
+// Base switching delay (~10 ns realistic)
+parameter real tau = 10n;
+
+// ================= INTERNAL VARIABLES =================
+
+real state;
+real Rmtj;
+real t_last_switch;
+real Vmtj;
+real tau_dyn;
+
+// ================= MODEL =================
+
+analog begin
+
+    @(initial_step) begin
+        state = 0;
+        t_last_switch = 0;
+    end
+
+    // -------- Voltage across MTJ --------
+    Vmtj = V(T1, T2);
+
+    // -------- Dynamic delay (voltage dependent) --------
+    // Higher voltage  faster switching
+    if (Vmtj > Vc_pos)
+        tau_dyn = tau * (Vc_pos / (Vmtj - Vc_pos + 1e-3));
+    else if (Vmtj < Vc_neg)
+        tau_dyn = tau * (abs(Vc_neg) / (abs(Vmtj) - abs(Vc_neg) + 1e-3));
+    else
+        tau_dyn = 1e9; // no switching if below threshold
+
+    // -------- Switching logic --------
+
+    // P  AP
+    if (Vmtj > Vc_pos && state == 0 && ($abstime - t_last_switch) > tau_dyn) begin
+        state = 1;
+        t_last_switch = $abstime;
+    end
+
+    // AP  P
+    if (Vmtj < Vc_neg && state == 1 && ($abstime - t_last_switch) > tau_dyn) begin
+        state = 0;
+        t_last_switch = $abstime;
+    end
+
+    // -------- Resistance --------
+    Rmtj = state ? Rap : Rp;
+
+    // -------- Electrical behavior --------
+    I(T1, T2) <+ Vmtj / Rmtj;
+
+    // -------- Output state --------
+    V(STATE) <+ state;
+
+end
+
+endmodule

@@ -1,0 +1,84 @@
+`include "constants.vams"
+`include "disciplines.vams"
+
+module mtj_pma(T1, T2, STATE);
+inout T1, T2;
+output STATE;
+
+electrical T1, T2, STATE;
+
+// ================= PARAMETERS =================
+parameter real Rp  = 5k;
+parameter real Rap = 10k;
+parameter real Ic = 50u;
+parameter real tau0 = 10n;
+parameter real tsmooth = 100p;
+
+// ================= INTERNAL VARIABLES =================
+real state;
+real Rmtj;
+real Imtj;
+
+real t_accum;
+real direction;
+
+real tau_eff;
+real dt;
+real t_prev;
+
+// ================= MODEL =================
+analog begin
+
+    @(initial_step) begin
+        state = 0;
+        t_accum = 0;
+        t_prev = 0;
+    end
+
+    // -------- Time step --------
+    dt = $abstime - t_prev;
+    t_prev = $abstime;
+
+    // -------- Current --------
+    Imtj = I(T1, T2);
+
+    // -------- Direction --------
+    if (Imtj > 0)
+        direction = +1;
+    else if (Imtj < 0)
+        direction = -1;
+    else
+        direction = 0;
+
+    // -------- Switching dynamics --------
+    if (abs(Imtj) > Ic) begin
+
+        tau_eff = tau0 * (Ic / abs(Imtj));
+
+        t_accum = t_accum + dt;
+
+        if (t_accum > tau_eff) begin
+            if (direction == +1 && state == 0)
+                state = 1;
+            else if (direction == -1 && state == 1)
+                state = 0;
+
+            t_accum = 0;
+        end
+
+    end else begin
+        t_accum = 0;
+    end
+
+    // -------- Resistance --------
+    Rmtj = state ? Rap : Rp;
+
+    // -------- Electrical behavior --------
+    I(T1, T2) <+ V(T1, T2) / Rmtj;
+
+    // -------- Output --------
+    V(STATE) <+ transition(state, 0, tsmooth);
+
+end
+
+endmodule

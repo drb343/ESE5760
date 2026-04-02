@@ -1,0 +1,125 @@
+// VerilogA for ESE5760, mtj_cell_4, veriloga
+
+`include "constants.vams"
+`include "disciplines.vams"
+
+// Updated (fixed two typos): Nov. 28, 2014
+// First Release: July 1, 2014
+// Verilog-A codes for modeling the MTJ and setting its initial conditions
+// This model is referenced as [37] in the following paper:
+// Authors: A. Vatankhahghadim, S. Huda, A. Sheikholeslami
+// {aynaz, safeen, ali}@eecg.utoronto.ca 
+// "A Survey on Circuit Modeling of Spin-Transfer-Torque Magnetic Tunnel Junctions"
+// IEEE Trans. on Circuits and Systems I: Regular Papers, 2014
+// www.eecg.utoronto.ca/~ali/papers/tcas1-aynaz-2014.pdf
+
+// The source for this file can be found at the following website:
+// www.eecg.utoronto.ca/~ali/mram.html
+
+module proposed_device_2(pos, neutral, neg, mx, my, mz);
+
+//terminal definitions
+inout pos,neutral,neg, mx, my, mz;
+electrical pos,neutral,neg; 
+electrical mx, my, mz; 
+branch (pos, neutral) top;
+branch (neutral, neg) bott;
+
+// variables
+real top_res0, top_res, bott_res0, bott_res, net_torque, polarization_top, polarization_bott, top_efficiency, bottom_efficiency, volume, rpar_top, rpar_bott, RandomGaussian, Hfluctuation;
+integer seed;
+// LLG equation coefficients
+
+real h1, h2, h3, k1, k2, k3, s1, s2, s3;
+
+
+
+// model parameters
+
+parameter integer use_as_dmtj = 1 from (-2:2);
+parameter real plank_constant = 1.054e-27 from (-inf:inf);
+parameter real electron_charge = 1.602e-19 from (-inf:inf);
+parameter real gyromagnetic_ratio =  1.7608e7 from (-inf:inf);
+parameter real alpha = 0.002 from (0:inf); 
+parameter real Ms = 1050 from (0:inf);
+parameter real Hk = 250 from (0:inf); 
+parameter real Vh = 0.5 from (0:inf);
+parameter real Rp = 1500 from (0:inf); 
+parameter real tmr = 2 from (0:inf);
+parameter real length = 60e-7 /*60e-7*/ from (0:inf);
+parameter real width = 60e-7 from (0:inf);
+parameter real thickness = 1e-7 from (0:inf);
+parameter real tox = 1.2e-9 from (0:inf); 
+
+
+// model analog block
+
+analog begin
+
+	volume = length*width*thickness;
+k1 = -1*gyromagnetic_ratio/(1 + pow(alpha,2));
+
+k2 = -1*gyromagnetic_ratio*alpha/(1 +   
+     pow(alpha,2));
+k3 = gyromagnetic_ratio*plank_constant/(2*electron_charge*Ms*volume);
+
+	//conventional STT source (PL with easy axis parallel to FL)
+
+	s1 = 0;
+	s2 = 0;
+	s3 = 1;
+
+	rpar_top = 2*Rp*(tmr + 1 + 
+            V(top)*V(top)/(Vh*Vh))/(tmr  
+            + 2*(1 + 
+            (V(top)*V(top))/(Vh*Vh)));
+
+	rpar_bott = 2*Rp*(tmr + 1 + 
+            V(bott)*V(bott)/(Vh*Vh))/(tmr 
+            + 2*(1 + 
+            (V(bott)*V(bott))/(Vh*Vh)));
+
+	polarization_top = sqrt(tmr/(tmr + 2*(1 
+               +V(top)*V(top)/(Vh*Vh)))); 
+
+	polarization_bott = sqrt(tmr/(tmr + 2*(1 
+            + V(bott)*V(bott)/(Vh*Vh)))); 
+
+	top_efficiency = polarization_top/(2*(1 
+       + pow(polarization_top,2)*V(mz)));
+
+	bottom_efficiency = 
+                polarization_bott/(2*(1 + 
+        pow(polarization_bott,2)*V(mz)));	
+	top_res = rpar_top/(1 + polarization_top*polarization_top*V(mz));
+
+	bott_res = 0;
+
+	net_torque =  I(top)*top_efficiency;
+
+
+	//Heff=Heff+Hfluctuation
+	seed=25;
+	RandomGaussian=$rdist_normal(seed, 0, 1);
+	Hfluctuation=sqrt(2*alpha*kb*T/(gyromagnetic_ratio*Ms*volume))*RandomGaussian;
+	h1= -4*`M_PI*Ms*V(mx)+Hfluctuation;
+	h2 = 0+Hfluctuation;
+    	h3 = Hk*V(mz)+Hfluctuation;
+
+if(analysis("tran")) begin
+
+		V(mx): ddt(V(mx)) == k1*(h3*V(my) - h2*V(mz)) + k2*(-h1*V(my)*V(my) - h1*V(mz)*V(mz) + h2*V(mx)*V(my) + h3*V(mx)*V(mz))+ k3*net_torque*(-s1*V(my)*V(my) -s1*V(mz)*V(mz) + s2*V(mx)*V(my) + s3*V(mx)*V(mz));
+
+		V(my): ddt(V(my)) == k1*(h1*V(mz) - h3*V(mx))+ k2*(h1*V(mx)*V(my) - h2*V(mx)*V(mx) - h2*V(mz)*V(mz) + h3*V(my)*V(mz)) + k3*net_torque*(s1*V(mx)*V(my) - s2*V(mx)*V(mx) - s2*V(mz)*V(mz) + s3*V(my)*V(mz));
+
+		V(mz): ddt(V(mz)) == k1*(h2*V(mx) -h1*V(my))+ k2*(h1*V(mx)*V(mz) + h2*V(my)*V(mz) -h3*V(mx)*V(mx) - h3*V(my)*V(my))+ k3*net_torque*(s1*V(mx)*V(mz) + s2*V(my)*V(mz) - s3*V(mx)*V(mx) - s3*V(my)*V(my));
+
+end
+
+	V(top) <+ I(top)*top_res;
+	V(bott) <+ I(bott)*bott_res; 
+
+end
+
+endmodule
+

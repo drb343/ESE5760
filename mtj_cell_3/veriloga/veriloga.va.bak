@@ -1,0 +1,99 @@
+`include "constants.vams"
+`include "disciplines.vams"
+
+module mtj_pma(T1, T2, STATE);
+inout T1, T2;
+output STATE;
+
+electrical T1, T2, STATE;
+
+// ================= PARAMETERS =================
+
+// Resistance states
+parameter real Rp  = 5k;
+parameter real Rap = 10k;
+
+// Critical switching current (VERY IMPORTANT)
+parameter real Ic = 50u;   // 50 A (tunable, realistic scale)
+
+// Base switching time
+parameter real tau0 = 10n;
+
+// Smoothing time for output
+parameter real tsmooth = 100p;
+
+// ================= INTERNAL VARIABLES =================
+
+real state;        // 0 = P, 1 = AP
+real Rmtj;
+real Imtj;
+
+real t_accum;      // accumulated switching time
+real direction;    // +1 or -1
+
+// ================= MODEL =================
+
+analog begin
+
+    @(initial_step) begin
+        state = 0;
+        t_accum = 0;
+    end
+
+    // -------- Current through MTJ --------
+    Imtj = I(T1, T2);
+
+    // -------- Determine switching direction --------
+    // Positive current: P  AP
+    // Negative current: AP  P
+
+    if (Imtj > 0)
+        direction = +1;
+    else if (Imtj < 0)
+        direction = -1;
+    else
+        direction = 0;
+
+    // -------- Switching dynamics --------
+    // Only accumulate if current exceeds critical current
+
+    if (abs(Imtj) > Ic) begin
+
+        // Effective switching speed
+        // Higher current  faster switching
+        real tau_eff;
+        tau_eff = tau0 * (Ic / abs(Imtj));
+
+        // Accumulate switching progress
+        t_accum = t_accum + ($abstime - $realtime);
+
+        // Check if enough time has passed
+        if (t_accum > tau_eff) begin
+
+            // Perform switching based on direction
+            if (direction == +1 && state == 0)
+                state = 1;
+            else if (direction == -1 && state == 1)
+                state = 0;
+
+            // Reset accumulation
+            t_accum = 0;
+        end
+
+    end else begin
+        // Not enough current  reset accumulation
+        t_accum = 0;
+    end
+
+    // -------- Resistance --------
+    Rmtj = state ? Rap : Rp;
+
+    // -------- Electrical behavior --------
+    I(T1, T2) <+ V(T1, T2) / Rmtj;
+
+    // -------- Output state (smoothed) --------
+    V(STATE) <+ transition(state, 0, tsmooth);
+
+end
+
+endmodule
