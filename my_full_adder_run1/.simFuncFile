@@ -1,0 +1,13 @@
+simFuncDPLList = '((nil libName "ESE_5700" cellName "my_full_adder"
+    viewName "functional" filePath "/lcars/home/p/patel5/cadenceGPDK/ESE_5700/my_full_adder/functional/verilog.v"
+    ) 
+    (nil libName "ESE_5700" cellName "my_xor"
+    viewName "functional" filePath "/lcars/home/p/patel5/cadenceGPDK/ESE_5700/my_xor/functional/verilog.v"
+    ) 
+    (nil libName "ESE_5700" cellName "my_nand"
+    viewName "functional" filePath "/lcars/home/p/patel5/cadenceGPDK/ESE_5700/my_nand/functional/verilog.v"
+    ) 
+    (nil libName "ESE_5700" cellName "my_inv"
+    viewName "functional" filePath "/lcars/home/p/patel5/cadenceGPDK/ESE_5700/my_inv/functional/verilog.v"
+    )
+)

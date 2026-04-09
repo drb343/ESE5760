@@ -1,0 +1,27 @@
+//
+// File created by:  ncxlmode
+// Do not modify this file
+//
+-XLMODE
+./INCA_libs/irun.lnx8664.15.20.nc
+-RUNMODE
+/lcars/home/p/patel5/cadenceGPDK/my_full_adder_run1/testfixture.template
+/lcars/home/p/patel5/cadenceGPDK/ESE_5700/my_xor/functional/verilog.v
+/lcars/home/p/patel5/cadenceGPDK/ESE_5700/my_nand/functional/verilog.v
+/lcars/home/p/patel5/cadenceGPDK/ESE_5700/my_inv/functional/verilog.v
+/lcars/home/p/patel5/cadenceGPDK/ESE_5700/my_full_adder/functional/verilog.v
+ihnl/cds0/netlist
+-NOSTDOUT
+-NOCOPYRIGHT
+-neverwarn
+-nostdout
+-nocopyright
+-CDSLIB
+./INCA_libs/irun.lnx8664.15.20.nc/cdsrun.lib
+-HDLVAR
+./INCA_libs/irun.lnx8664.15.20.nc/hdlrun.var
+-MESSAGES
+-UPDATE
+-XLLIBSTORE
+./INCA_libs/irun.lnx8664.15.20.nc/xllibs
+-ALLOWUNBOUND

@@ -1,0 +1,8 @@
+CADENCE IHNL11140
+$model
+ESE_5700/my_nor/functional my_nor
+$endmodel
+$net
+$endnet
+$param
+$endparam

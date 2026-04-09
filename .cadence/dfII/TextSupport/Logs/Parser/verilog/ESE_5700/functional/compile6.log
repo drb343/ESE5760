@@ -1,0 +1,23 @@
+ncvlog(64): 15.20-s031: (c) Copyright 1995-2017 Cadence Design Systems, Inc.
+TOOL:	ncvlog(64)	15.20-s031: Started on Nov 24, 2025 at 23:12:08 EST
+ncvlog
+    -use5x
+    -SPECIFICUNIT my_d_flip_flop
+    -zparse /tmp/vamsZparkb8249
+    -NOWARN DLNOHV
+    -work ESE_5700
+    -view functional
+    -nostdout
+    -logfile /lcars/home/p/patel5/cadenceGPDK/.cadence/dfII/TextSupport/Logs/Parser/verilog/ESE_5700/functional/compile6.log
+    -messages
+    -cdslib /lcars/home/p/patel5/cadenceGPDK/cds.lib
+    /lcars/home/p/patel5/cadenceGPDK/ESE_5700/my_d_flip_flop/functional/verilog.v
+
+file: /lcars/home/p/patel5/cadenceGPDK/ESE_5700/my_d_flip_flop/functional/verilog.v
+        x <= D;           // sample input
+        |
+ncvlog: *E,WANOTL (/lcars/home/p/patel5/cadenceGPDK/ESE_5700/my_d_flip_flop/functional/verilog.v,52|8): A net is not a legal lvalue in this context [9.3.1(IEEE)].
+	module ESE_5700.my_d_flip_flop:functional
+		errors: 1, warnings: 0
+	 writing out DPL output:
+TOOL:	ncvlog(64)	15.20-s031: Exiting on Nov 24, 2025 at 23:12:08 EST  (total: 00:00:00)

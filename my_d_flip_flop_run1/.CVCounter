@@ -1,0 +1,3 @@
+cellViewCounterTable = makeTable('cellViewCounterTableType nil)
+cellViewCounterTable['("ESE_5700" "my_d_flip_flop" "functional" )] =  5306
+cellViewCounterTable['("ESE_5700" "my_inv" "symbol" )] =  43

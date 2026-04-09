@@ -1,0 +1,13 @@
+//Verilog HDL for "ESE_5700", "my_clk" "functional"
+
+`resetall
+`celldefine
+`delay_mode_path
+`timescale 1ns/10ps
+module my_clk (output wire CLK1, output wire CLK2, input wire CLKin);
+	wire z;
+	my_inv my_inv0(z, CLKin);
+	my_nor my_nor0(CLK1, CLKin, CLK2);
+	my_nor my_nor1(CLK2, z, CLK1);
+endmodule
+`endcelldefine

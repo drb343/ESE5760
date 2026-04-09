@@ -1,0 +1,14 @@
+
+`timescale 1ns / 1ns
+
+module test;
+
+
+wire  out;
+
+reg  in;
+
+
+
+my_inv top(out, in); 
+ 

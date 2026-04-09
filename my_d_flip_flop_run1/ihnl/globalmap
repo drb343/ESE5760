@@ -1,0 +1,9 @@
+CADENCE IHNL11140
+$model
+ESE_5700/my_clk/functional my_clk
+ESE_5700/my_d_flip_flop/functional my_d_flip_flop
+$endmodel
+$net
+$endnet
+$param
+$endparam

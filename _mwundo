@@ -1,0 +1,183 @@
+// ============================================================
+//  Bipolar RRAM Compact Model  Stanford Model (SM)
+//  Based EXACTLY on Gonzlez-Cordero et al., IEEE 2016
+//  "Simulation of RRAM memory circuits, a Verilog-A compact
+//   modeling approach"
+//
+//  Equations implemented (paper numbering):
+//    Eq.1   Gap dynamics   dg/dt
+//    Eq.2   Field enhancement  (g)  with F_min threshold
+//    Eq.3   Device temperature  T
+//    Eq.4   Hopping current  I_RRAM
+//    Eq.5   Total current (DC + capacitive)
+//
+//  Parameters: Table I (SM column) of the paper
+//
+//  Key difference from Stanford V1.0:
+//     (g) = 0  *(g/g_ini)^3  [not 0  *g^]
+//     Threshold condition: if *|V|/tox < F_min  =0 (no switch)
+//     Capacitive displacement current included (Eq.5)
+//     In SM:  Vg = V_RRAM  (no series ohmic resistance)
+// ============================================================
+
+`include "constants.vams"   // `P_Q = 1.602e-19 C, `P_K = 1.381e-23 J/K
+`include "disciplines.vams"
+
+module rram_bipolar (TE, BE);
+
+    // ---------------------------------------------------------
+    //  Ports
+    // ---------------------------------------------------------
+    inout     TE, BE;
+    electrical TE, BE;
+
+    // ---------------------------------------------------------
+    //  Parameters  Table I, SM column
+    //  (Gonzlez-Cordero et al., IEEE 2016)
+    // ---------------------------------------------------------
+
+    // Hopping current  (Eq. 4)
+    parameter real I0     = 5.0e-4;    // [A]    0.5 mA  current prefactor
+    parameter real g0     = 0.15e-9;   // [m]    0.15 nm  tunneling decay length
+    parameter real V0     = 0.8;       // [V]    voltage normalization
+
+    // Gap dynamics  (Eq. 1)
+    parameter real v0     = 0.5;       // [m/s]  ion hop velocity prefactor
+    parameter real Ea     = 0.68;      // [eV]   activation energy
+    parameter real a0     = 0.25e-9;   // [m]    atom spacing (~0.25 nm)
+    parameter real tox    = 15.0e-9;   // [m]    oxide thickness 15 nm
+
+    // Field enhancement  (Eq. 2)
+    parameter real gamma0 = 21.0;      // [-]    enhancement prefactor
+    parameter real beta   = 0.58;      // [-]    cubic correction coefficient
+    parameter real Fmin   = 1.4e9;     // [V/m]  = 1.4 V/nm  min field threshold
+
+    // Temperature  (Eq. 3)
+    parameter real Rth    = 2.1e3;     // [K/W]  thermal resistance
+    parameter real T0     = 300.0;     // [K]    ambient temperature
+
+    // Capacitive current  (Eq. 5)
+    parameter real Cp     = 1.0e-15;   // [F]    device capacitance (~1 fF)
+
+    // Gap state limits
+    parameter real g_ini  = 1.5e-9;    // [m]    initial gap  start in HRS
+    parameter real g_min  = 0.1e-9;    // [m]    fully SET  (~0.1 nm floor)
+    parameter real g_max  = 1.7e-9;    // [m]    fully RESET (hard ceiling)
+
+    // ---------------------------------------------------------
+    //  Internal variables
+    // ---------------------------------------------------------
+    real g;          // gap [m]   state variable (integrated)
+    real g_c;        // gap after physical clamping
+    real V_dev;      // total device voltage = V_RRAM  [V]
+    real Vg;         // voltage at the gap [V]
+                     // SM: Vg = V_RRAM (no ohmic series R in filament)
+    real I_hop;      // DC hopping current [A]   (Eq. 4)
+    real T_loc;      // local device temperature [K]  (Eq. 3)
+    real gamma_ef;   // effective field enhancement  (Eq. 2)
+    real dg_dt;      // gap rate of change [m/s]  (Eq. 1)
+    real sinh_arg;   // argument of sinh  clipped for numerical safety
+    real field_check;// *|V|/tox  used for F_min threshold test
+
+    // ---------------------------------------------------------
+    //  Analog block
+    // ---------------------------------------------------------
+    analog begin
+
+        // ======================================================
+        // 1. Device terminal voltage
+        //    In SM: no series resistance, so Vg = V_RRAM (Eq. 1 note)
+        // ======================================================
+        V_dev = V(TE, BE);
+        Vg    = V_dev;
+
+        // ======================================================
+        // 2. Integrate gap state variable  (single idt  never duplicate)
+        //
+        //    g(t) = g_ini +  dg_dt dt
+        //
+        //    idt() uses dg_dt computed at the PREVIOUS timestep.
+        //    Spectre/HSPICE resolve this causally through iteration.
+        // ======================================================
+        g = idt(dg_dt, g_ini);
+
+        // ======================================================
+        // 3. Clamp gap to physical bounds
+        // ======================================================
+        g_c = g;
+        if (g_c < g_min) g_c = g_min;
+        if (g_c > g_max) g_c = g_max;
+
+        // ======================================================
+        // 4. Hopping current   (Eq. 4)
+        //    I_RRAM = I0 * exp(-g/g0) * sinh(Vg/V0)
+        // ======================================================
+        I_hop = I0 * exp(-g_c / g0) * sinh(Vg / V0);
+
+        // ======================================================
+        // 5. Device temperature   (Eq. 3)
+        //    T = T0 + V_RRAM * I_RRAM * Rth
+        //
+        //    Note: using abs() on power to stay physical at
+        //    both polarities.  Hard cap at 2000K prevents
+        //    runaway in exp(-Ea/kT).
+        // ======================================================
+        T_loc = T0 + abs(Vg * I_hop) * Rth;
+        if (T_loc > 2000.0) T_loc = 2000.0;
+        if (T_loc < T0)     T_loc = T0;
+
+        // ======================================================
+        // 6. Field enhancement with F_min threshold   (Eq. 2)
+        //
+        //    (g) = 0  *(g/g_ini)^3   when *|V|/tox >= F_min
+        //    (g) = 0                     when *|V|/tox <  F_min
+        //
+        //    The threshold prevents switching below a minimum
+        //    electric field  physically: the field must be strong
+        //    enough to drive ion migration.
+        // ======================================================
+        gamma_ef   = gamma0 - beta * pow(g_c / g_ini, 3.0);
+        field_check = gamma_ef * abs(V_dev) / tox;
+        if (field_check < Fmin) gamma_ef = 0.0;
+
+        // ======================================================
+        // 7. Gap dynamics   (Eq. 1)
+        //    dg/dt = -v0 * exp(-Ea/(kb*T)) * sinh(*a0*q*Vg / (tox*kb*T))
+        //
+        //    sinh argument clipped to 500 to prevent fp overflow.
+        //
+        //    Bipolar behavior is AUTOMATIC from the sinh sign:
+        //      Vg > 0    sinh > 0    dg/dt < 0    g     LRS (SET)
+        //      Vg < 0    sinh < 0    dg/dt > 0    g     HRS (RESET)
+        // ======================================================
+        sinh_arg = gamma_ef * a0 * `P_Q * Vg / (tox * `P_K * T_loc);
+        if (sinh_arg >  500.0) sinh_arg =  500.0;
+        if (sinh_arg < -500.0) sinh_arg = -500.0;
+
+        dg_dt = -v0 * exp(-Ea * `P_Q / (`P_K * T_loc)) * sinh(sinh_arg);
+
+        // Hard-stop integration when gap is at a physical rail
+        // (prevents oscillation / overshoot beyond clamp)
+        if ((g_c <= g_min) && (dg_dt < 0.0)) dg_dt = 0.0;
+        if ((g_c >= g_max) && (dg_dt > 0.0)) dg_dt = 0.0;
+
+        // ======================================================
+        // 8. Current contributions to terminals   (Eq. 5)
+        //    I_Total = I_RRAM + Cp * dV/dt
+        //
+        //    The Cp*ddt(V) term is the standard VerilogA way
+        //    to model a capacitor. ddt() is VALID here because
+        //    it is inside a branch contribution I(TE,BE) <+
+        //    (this is different from trying to assign to ddt(g)
+        //    which caused your previous TE-4309 error).
+        // ======================================================
+        I(TE, BE) <+ I_hop;                    // DC hopping current
+        I(TE, BE) <+ Cp * ddt(V_dev);          // displacement current
+
+        // Tiny shunt resistor (1 TOhm) for DC operating point
+        // convergence. Remove if it affects HRS/LRS ratio.
+        I(TE, BE) <+ V_dev * 1.0e-12;
+
+    end // analog
+
+endmodule

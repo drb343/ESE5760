@@ -1,0 +1,56 @@
+//Verilog HDL for "ESE_5700", "my_d_flip_flop" "functional"
+
+//`resetall
+//`celldefine
+//`delay_mode_path
+//`timescale 1ns/10ps
+//module my_d_flip_flop (output trireg Q, input wire D, input wire CLKin);
+//	wire a, b, d, e; 
+//	trireg c;
+//	my_clk my_clk1(CLK1, CLK2, CLKin);
+//	my_inv my_inv0(a, CLK1);
+//	pmos pmos0(b, D, a);
+//	nmos nmos0(b, D, CLK1);
+//	my_inv my_inv1(c, b);
+//	my_inv my_inv2(d, CLK2);
+//	pmos pmos1(e, c, d);
+//	nmos nmos1(e, c, CLK2);
+//	my_inv my_inv3(Q, e);
+//endmodule
+//`endcelldefine
+
+`resetall
+`celldefine
+`delay_mode_path
+`timescale 1ns/10ps
+
+module my_d_flip_flop (
+    output wire Q,
+    input wire D,
+    input wire CLK1,
+    input wire CLK1_
+);
+
+    // Storage node for dynamic logic
+    // trireg mimics charge holding on a capacitor
+    trireg (medium) #(1,1,50) x;   // 50 ns decay time
+
+    wire x_inv;
+    wire qbar;
+
+    // Transmission gate for sampling D during CLK1 = 1
+    // cmos(out, in, clk, clkbar)
+    cmos tg1 (x, D, CLK1, CLK1_);
+
+    // First inverter
+    my_inv inv1 (x_inv, x);
+
+    // Second transmission gate for output latch on opposite clock phase
+    cmos tg2 (qbar, x_inv, CLK1_, CLK1);
+
+    // Final inverter drives Q
+    my_inv inv2 (Q, qbar);
+
+endmodule
+
+`endcelldefine

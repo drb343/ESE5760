@@ -1,0 +1,28 @@
+// Verilog HDL and netlist files of
+// "ESE_5700 my_full_adder functional"
+
+// HDL models
+
+// HDL file - ESE_5700, my_xor, functional.
+/lcars/home/p/patel5/cadenceGPDK/ESE_5700/my_xor/functional/verilog.v
+
+// HDL file - ESE_5700, my_nand, functional.
+/lcars/home/p/patel5/cadenceGPDK/ESE_5700/my_nand/functional/verilog.v
+
+// HDL file - ESE_5700, my_inv, functional.
+/lcars/home/p/patel5/cadenceGPDK/ESE_5700/my_inv/functional/verilog.v
+
+// HDL file for ESE_5700, my_full_adder, functional.
+/lcars/home/p/patel5/cadenceGPDK/ESE_5700/my_full_adder/functional/verilog.v
+
+
+
+// End HDL models
+
+// Netlisted models
+
+// netlist file - ESE_5700, my_full_adder, functional.
+ihnl/cds0/netlist
+
+
+// End HDL models

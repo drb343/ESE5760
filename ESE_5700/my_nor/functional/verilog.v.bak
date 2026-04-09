@@ -1,0 +1,10 @@
+//Verilog HDL for "ESE_5700", "my_nor" "functional"
+
+`resetall
+`celidefine
+`delay_mode_path
+`timescale 1ns/10ps
+module my_nor (output wire out, input wire i1, input wire i2);
+	nor(out, i1, i2);
+endmodule
+`endcelldefine

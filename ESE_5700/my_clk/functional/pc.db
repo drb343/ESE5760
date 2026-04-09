@@ -1,0 +1,11 @@
+--pcdbVlog file, Rev:1.0
+
+#CELL
+* my_inv *
+my_inv0
+
+#CELL
+* my_nor *
+my_nor0
+my_nor1
+

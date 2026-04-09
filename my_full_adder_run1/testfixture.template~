@@ -1,0 +1,23 @@
+
+`timescale 1ns / 1ns
+
+module test;
+
+
+wire  C_out, S;
+
+reg  A, B, C_in;
+
+
+
+my_full_adder top(S, C_out, A, B, C_in); 
+ 
+
+`ifdef verilog
+
+ //please enter any additional verilog stimulus in the /lcars/home/p/patel5/cadenceGPDK/my_full_adder_run1/testfixture.verilog file
+`include "/lcars/home/p/patel5/cadenceGPDK/my_full_adder_run1/testfixture.verilog"
+
+`endif
+
+endmodule 

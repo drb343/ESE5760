@@ -1,0 +1,137 @@
+*** Message Type: info ***
+When: Sat Nov 22 17:21:46 EST 2025
+SimVision started.
+Version: TOOL:  simvision(64)   15.20-s031
+User: patel5
+Host: big12.seas.upenn.edu
+Platform: Linux/x86_64/6.4.0-150600.23.73-default
+Started: Sat Nov 22 17:21:46 EST 2025
+Command: /lcars/software/linux/x86_64/ic-design/cadence/ius/tools.lnx86/simvision/bin/64bit/simvision.exe -connect dc:big12.seas.upenn.edu:37987 -64BIT -mpssession virtuoso17680 -nocopyright -mpshost big12.seas.upenn.edu
+Work Directory: /lcars/home/p/patel5/cadenceGPDK/my_inv_run1
+ 
+*** Message Type: info ***
+When: Sat Nov 22 17:21:56 EST 2025
+Create browser window: "Design Browser 1"
+ 
+*** Message Type: info ***
+When: Sat Nov 22 17:23:22 EST 2025
+Create console window: "Console"
+ 
+*** Message Type: info ***
+When: Sat Nov 22 17:23:58 EST 2025
+Connect to Simulator
+      Design: worklib.test:template
+   Languages: verilog
+   Simulator: NC-Sim
+     Version: TOOL:      ncsim(64)       15.20-s031
+        User: patel5
+        Host: big12.seas.upenn.edu
+Time Started: Sat Nov 22 17:21:19 EST 2025
+  Process ID: 24426
+   Directory: /lcars/home/p/patel5/cadenceGPDK/my_inv_run1
+     Command: ncxlmode +delay_mode_path +typdelays -l simout.tmp /lcars/home/p/patel5/cadenceGPDK/my_inv_run1/testfixture.template -f /lcars/home/p/patel5/cadenceGPDK/my_inv_run1/verilog.inpfiles +nostdout +nocopyright {+ncvlogargs+ -neverwarn -nostdout -nocopyright } {+ncelabargs+ -neg_tchk  -nonotifier  -sdf_NOCheck_celltype  -access +r  -pulse_e 100  -pulse_r 100  -neverwarn  -timescale 1ns/1ns -nostdout -nocopyright} {+ncsimargs+ -neverwarn  -nocopyright -gui -input /lcars/home/p/patel5/cadenceGPDK/my_inv_run1/.simTmpNCCmd } +mpssession+virtuoso17680 +mpshost+big12.seas.upenn.edu
+
+ 
+*** Message Type: info ***
+When: Sat Nov 22 17:23:59 EST 2025
+Create utility window: "Properties"
+ 
+*** Message Type: info ***
+When: Sat Nov 22 17:24:51 EST 2025
+Create waveform window: "Waveform 1"
+ 
+*** Message Type: info ***
+When: Sat Nov 22 17:27:08 EST 2025
+Delete waveform window: "Waveform 1"
+ 
+*** Message Type: info ***
+When: Sat Nov 22 17:28:41 EST 2025
+Create waveform window: "Waveform 2"
+ 
+*** Message Type: info ***
+When: Sat Nov 22 17:36:52 EST 2025
+Delete waveform window: "Waveform 2"
+ 
+*** Message Type: info ***
+When: Sat Nov 22 17:37:39 EST 2025
+Delete browser window: "Design Browser 1"
+ 
+*** Message Type: info ***
+When: Sat Nov 22 17:38:26 EST 2025
+Exit NC-Sim: user
+      Design: worklib.test:template
+   Languages: verilog
+   Simulator: NC-Sim
+     Version: TOOL:      ncsim(64)       15.20-s031
+        User: patel5
+        Host: big12.seas.upenn.edu
+Time Started: Sat Nov 22 17:21:19 EST 2025
+  Process ID: 24426
+   Directory: /lcars/home/p/patel5/cadenceGPDK/my_inv_run1
+     Command: ncxlmode +delay_mode_path +typdelays -l simout.tmp /lcars/home/p/patel5/cadenceGPDK/my_inv_run1/testfixture.template -f /lcars/home/p/patel5/cadenceGPDK/my_inv_run1/verilog.inpfiles +nostdout +nocopyright {+ncvlogargs+ -neverwarn -nostdout -nocopyright } {+ncelabargs+ -neg_tchk  -nonotifier  -sdf_NOCheck_celltype  -access +r  -pulse_e 100  -pulse_r 100  -neverwarn  -timescale 1ns/1ns -nostdout -nocopyright} {+ncsimargs+ -neverwarn  -nocopyright -gui -input /lcars/home/p/patel5/cadenceGPDK/my_inv_run1/.simTmpNCCmd } +mpssession+virtuoso17680 +mpshost+big12.seas.upenn.edu
+
+ 
+*** Message Type: error ***
+When: Sat Nov 22 17:38:32 EST 2025
+NC-Sim Crashed:
+      Design: worklib.test:template
+   Languages: verilog
+   Simulator: NC-Sim
+     Version: TOOL:      ncsim(64)       15.20-s031
+        User: patel5
+        Host: big12.seas.upenn.edu
+Time Started: Sat Nov 22 17:21:19 EST 2025
+  Process ID: 24426
+   Directory: /lcars/home/p/patel5/cadenceGPDK/my_inv_run1
+     Command: ncxlmode +delay_mode_path +typdelays -l simout.tmp /lcars/home/p/patel5/cadenceGPDK/my_inv_run1/testfixture.template -f /lcars/home/p/patel5/cadenceGPDK/my_inv_run1/verilog.inpfiles +nostdout +nocopyright {+ncvlogargs+ -neverwarn -nostdout -nocopyright } {+ncelabargs+ -neg_tchk  -nonotifier  -sdf_NOCheck_celltype  -access +r  -pulse_e 100  -pulse_r 100  -neverwarn  -timescale 1ns/1ns -nostdout -nocopyright} {+ncsimargs+ -neverwarn  -nocopyright -gui -input /lcars/home/p/patel5/cadenceGPDK/my_inv_run1/.simTmpNCCmd } +mpssession+virtuoso17680 +mpshost+big12.seas.upenn.edu
+      Design: worklib.test:template
+   Languages: verilog
+   Simulator: NC-Sim
+     Version: TOOL:  ncsim(64)       15.20-s031
+        User: patel5
+        Host: big12.seas.upenn.edu
+Time Started: Sat Nov 22 17:21:19 EST 2025
+  Process ID: 24426
+   Directory: /lcars/home/p/patel5/cadenceGPDK/my_inv_run1
+     Command: ncxlmode +delay_mode_path +typdelays -l simout.tmp /lcars/home/p/patel5/cadenceGPDK/my_inv_run1/testfixture.template -f /lcars/home/p/patel5/cadenceGPDK/my_inv_run1/verilog.inpfiles +nostdout +nocopyright {+ncvlogargs+ -neverwarn -nostdout -nocopyright } {+ncelabargs+ -neg_tchk  -nonotifier  -sdf_NOCheck_celltype  -access +r  -pulse_e 100  -pulse_r 100  -neverwarn  -timescale 1ns/1ns -nostdout -nocopyright} {+ncsimargs+ -neverwarn  -nocopyright -gui -input /lcars/home/p/patel5/cadenceGPDK/my_inv_run1/.simTmpNCCmd } +mpssession+virtuoso17680 +mpshost+big12.seas.upenn.edu
+
+Outstanding STRAP Requests:
+        strap::report enable out
+ 
+*** Message Type: error ***
+When: Sat Nov 22 17:39:08 EST 2025
+can't execute "ncxlmode": socket is not connected
+    while executing
+"blt::bgexec ::util::ppepid(@public@56) -- ncxlmode +delay_mode_path +typdelays -l simout.tmp /lcars/home/p/patel5/cadenceGPDK/my_inv_run1/testfixture...."
+    ("eval" body line 1)
+    invoked from within
+"eval blt::bgexec $newSimVarname -- $cmdline &"
+    (object "::.simRecoveryDialog0" method "::SimRecoveryDialog::_restartSimulator" body line 20)
+    invoked from within
+"_restartSimulator"
+    ("restart" arm line 10)
+    invoked from within
+"switch -- $choice1 {
+       restart {
+          ::savescript::init
+     set ::savescript::_crash2restartSim 1
+          _saveStates
+            set ::savescript::_crash2rest..."
+    (object "::.simRecoveryDialog0" method "::SimRecoveryDialog::_dialogchoice" body line 5)
+    invoked from within
+"::.simRecoveryDialog0 _dialogchoice {restart nc-sim}"
+    (in namespace inscope "::cwidgets::Dialog" script line 1)
+    invoked from within
+"namespace inscope ::cwidgets::Dialog {::.simRecoveryDialog0 _dialogchoice {restart nc-sim}}"
+    ("uplevel" body line 1)
+    invoked from within
+"uplevel \#0 $cmd"
+    (procedure "Button::_release" line 18)
+    invoked from within
+"Button::_release .simRecoveryDialog0-dialog.bbox.b0"
+    (command bound to event)
+ 
+*** Message Type: info ***
+When: Sat Nov 22 17:39:09 EST 2025
+SimVision Exit.
+ 

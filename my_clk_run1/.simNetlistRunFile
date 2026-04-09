@@ -1,0 +1,13 @@
+simVerilogNetlistFileList = '((("ESE_5700" "my_d_flip_flop") 
+	("cds1/netlist" "cds1/map" "functional")
+    ) 
+    (("ESE_5700" "my_clk") 
+	("cds0/netlist" "cds0/map" "functional")
+    )
+)
+simVerilogNetlistFileLibList = '("ESE_5700")
+simVerilogNetlistFileCellList = '(("ESE_5700" 
+	("my_clk" "my_d_flip_flop")
+    )
+)
+hnlIncrementalDirectory = '"ihnl"

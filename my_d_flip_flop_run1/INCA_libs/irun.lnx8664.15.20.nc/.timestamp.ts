@@ -1,0 +1,7 @@
+1764043336 /lcars/home/p/patel5/cadenceGPDK/my_d_flip_flop_run1/ihnl/cds0/netlist
+1764043443 /lcars/home/p/patel5/cadenceGPDK/my_d_flip_flop_run1/testfixture.template
+1763929818 /lcars/home/p/patel5/cadenceGPDK/ESE_5700/my_clk/functional/verilog.v
+1763853753 /lcars/home/p/patel5/cadenceGPDK/ESE_5700/my_nor/functional/verilog.v
+1764043304 /lcars/home/p/patel5/cadenceGPDK/ESE_5700/my_d_flip_flop/functional/verilog.v
+1763933594 /lcars/home/p/patel5/cadenceGPDK/my_d_flip_flop_run1/ihnl/cds1/netlist
+1763739063 /lcars/home/p/patel5/cadenceGPDK/ESE_5700/my_inv/functional/verilog.v

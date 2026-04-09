@@ -1,0 +1,14 @@
+tmLCVDPLList = '((nil viewType "netlist" viewName "functional"
+    cellName "my_inv" libName "ESE_5700"
+    ) 
+    (nil viewType "netlist" viewName "functional"
+    cellName "my_nand" libName "ESE_5700"
+    ) 
+    (nil viewType "netlist" viewName "functional"
+    cellName "my_xor" libName "ESE_5700"
+    ) 
+    (nil viewType "netlist" viewName "functional"
+    cellName "my_full_adder" libName "ESE_5700"
+    )
+)
+xxxInternalGlobAliasList = '(nil)

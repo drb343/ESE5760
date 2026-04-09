@@ -1,0 +1,23 @@
+
+`timescale 1ns / 10ps
+
+module test;
+
+
+wire  out;
+
+reg  in;
+
+
+
+my_inv top(out, in); 
+ 
+
+`ifdef verilog
+
+ //please enter any additional verilog stimulus in the /lcars/home/p/patel5/cadenceGPDK/my_inv_run1/testfixture.verilog file
+`include "/lcars/home/p/patel5/cadenceGPDK/my_inv_run1/testfixture.verilog"
+
+`endif
+
+endmodule 

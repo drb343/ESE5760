@@ -1,0 +1,8 @@
+CADENCE IHNL11140
+$model
+ESE_5700/my_full_adder/functional my_full_adder
+$endmodel
+$net
+$endnet
+$param
+$endparam

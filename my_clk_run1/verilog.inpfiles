@@ -1,0 +1,31 @@
+// Verilog HDL and netlist files of
+// "ESE_5700 my_d_flip_flop functional"
+
+// HDL models
+
+// HDL file - ESE_5700, my_nor, functional.
+/lcars/home/p/patel5/cadenceGPDK/ESE_5700/my_nor/functional/verilog.v
+
+// HDL file - ESE_5700, my_inv, functional.
+/lcars/home/p/patel5/cadenceGPDK/ESE_5700/my_inv/functional/verilog.v
+
+// HDL file for ESE_5700, my_d_flip_flop, functional.
+/lcars/home/p/patel5/cadenceGPDK/ESE_5700/my_d_flip_flop/functional/verilog.v
+
+
+// HDL file for ESE_5700, my_clk, functional.
+/lcars/home/p/patel5/cadenceGPDK/ESE_5700/my_clk/functional/verilog.v
+
+
+
+// End HDL models
+
+// Netlisted models
+
+// netlist file - ESE_5700, my_clk, functional.
+ihnl/cds0/netlist
+// netlist file - ESE_5700, my_d_flip_flop, functional.
+ihnl/cds1/netlist
+
+
+// End HDL models

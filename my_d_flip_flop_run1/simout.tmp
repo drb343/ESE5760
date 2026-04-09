@@ -1,0 +1,31 @@
+TOOL:	ncxlmode	15.20-s031: Started on Nov 24, 2025 at 23:04:11 EST
+ncxlmode
+	+delay_mode_path
+	+typdelays
+	-l
+	simout.tmp
+	/lcars/home/p/patel5/cadenceGPDK/my_d_flip_flop_run1/testfixture.template
+	-f /lcars/home/p/patel5/cadenceGPDK/my_d_flip_flop_run1/verilog.inpfiles
+		/lcars/home/p/patel5/cadenceGPDK/ESE_5700/my_inv/functional/verilog.v
+		/lcars/home/p/patel5/cadenceGPDK/ESE_5700/my_d_flip_flop/functional/verilog.v
+		ihnl/cds0/netlist
+	+nostdout
+	+nocopyright
+	+ncvlogargs+" -neverwarn -nostdout -nocopyright "
+	+ncelabargs+" -neg_tchk  -nonotifier  -sdf_NOCheck_celltype  -access +r  -pulse_e 100  -pulse_r 100  -neverwarn  -timescale 1ns/1ns -nostdout -nocopyright"
+	+ncsimargs+" -neverwarn  -nocopyright -gui -input /lcars/home/p/patel5/cadenceGPDK/my_d_flip_flop_run1/.simTmpNCCmd "
+	+mpssession+virtuoso18249
+	+mpshost+big25.seas.upenn.edu
+
+-------------------------------------
+Relinquished control to SimVision...
+ncsim> 
+ncsim> source /lcars/software/linux/x86_64/ic-design/cadence/ius/tools/inca/files/ncsimrc
+ncsim> database -open shmWave -shm -default -into shm.db
+Created default SHM database shmWave
+ncsim> probe -create -shm test  -all   -depth 1
+Created probe 1
+ncsim> run
+ncsim> ^C
+ncsim> exit
+TOOL:	ncxlmode	15.20-s031: Exiting on Nov 24, 2025 at 23:09:03 EST  (total: 00:04:52)

@@ -1,0 +1,3 @@
+projectDir = '"~/simulation"
+designInfo = '("ESE_5720_Project" "TIA" "schematic" "spectre")
+descriptionText = "the bandwidth and gain simulation is saved in this state and the gain comes out to be around 115.711 dB and the Bandwidth is about 6.64139MHz - 321.174MHz"

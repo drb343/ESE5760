@@ -1,0 +1,5 @@
+cellViewCounterTable = makeTable('cellViewCounterTableType nil)
+cellViewCounterTable['("ESE_5700" "my_nand" "symbol" )] =  56
+cellViewCounterTable['("ESE_5700" "my_full_adder" "functional" )] =  562
+cellViewCounterTable['("ESE_5700" "my_xor" "symbol" )] =  56
+cellViewCounterTable['("ESE_5700" "my_inv" "symbol" )] =  43

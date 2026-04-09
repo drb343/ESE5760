@@ -1,0 +1,1 @@
+artistResMgrCalcExprSetup("true" "plot" "E0" "integ(IT("/I6/Vdd") 0 4n " " )")

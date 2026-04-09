@@ -1,0 +1,15 @@
+//
+// File created by:  ncxlmode
+// Do not modify this file
+//
++delay_mode_path
++typdelays
+-l
+simout.tmp
+/lcars/home/p/patel5/cadenceGPDK/my_inv_run1/testfixture.template
+-f
+/lcars/home/p/patel5/cadenceGPDK/my_inv_run1/verilog.inpfiles
++nostdout
++nocopyright
++compile
+"+ncvlogargs+ -neverwarn -nostdout -nocopyright "

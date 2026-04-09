@@ -1,0 +1,23 @@
+
+`timescale 1ns / 1ns
+
+module test;
+
+
+wire  out;
+
+reg  i1, i2;
+
+
+
+my_nand top(out, i1, i2); 
+ 
+
+`ifdef verilog
+
+ //please enter any additional verilog stimulus in the /lcars/home/p/patel5/cadenceGPDK/my_nand_run1/testfixture.verilog file
+`include "/lcars/home/p/patel5/cadenceGPDK/my_nand_run1/testfixture.verilog"
+
+`endif
+
+endmodule 

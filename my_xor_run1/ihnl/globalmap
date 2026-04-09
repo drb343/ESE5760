@@ -1,0 +1,8 @@
+CADENCE IHNL11140
+$model
+ESE_5700/my_xor/functional my_xor
+$endmodel
+$net
+$endnet
+$param
+$endparam

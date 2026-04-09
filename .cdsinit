@@ -1,0 +1,28 @@
+;;;
+;;; Penn .cdsinit file
+;;;  loads ADS, IBM 7RF, and NCSU .cdsinit, .cdsenv, and display.drf files
+;;;  last updated: 1/2013 - tjf
+
+
+;;;
+;;; FILES TO LOAD 
+;;;
+
+ncsuFILE1   = strcat(getShellEnvVar("DESIGNKITS")  "/ncsu-cdk-1.6.0.beta/cdssetup/cdsenv")
+ncsuFILE2   = strcat(getShellEnvVar("DESIGNKITS")  "/ncsu-cdk-1.6.0.beta/cdssetup/cdsinit")
+ncsuFILE3   = strcat(getShellEnvVar("DESIGNKITS")  "/ncsu-cdk-1.6.0.beta/cdssetup/display.drf")
+
+
+;;;
+;;; TEST FILES EXISTENCE, THEN LOAD
+;;;
+
+
+if(isFile(ncsuFILE1) && isFile(ncsuFILE2) then
+          printf("### - Loading NCSU files\n")
+          loadi(ncsuFILE2)
+          envLoadFile(ncsuFILE1)
+          drLoadDrf(ncsuFILE3 nil)
+         )
+
+

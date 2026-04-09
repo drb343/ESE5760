@@ -1,0 +1,8 @@
+cellViewCounterTable = makeTable('cellViewCounterTableType nil)
+cellViewCounterTable['("ESE_5700" "my_d_flip_flop" "functional" )] =  987
+cellViewCounterTable['("ESE_5700" "my_clk" "symbol" )] =  56
+cellViewCounterTable['("ESE_5700" "my_clk" "functional" )] =  615
+cellViewCounterTable['("analogLib" "nmos" "symbol" )] =  39
+cellViewCounterTable['("analogLib" "pmos" "symbol" )] =  39
+cellViewCounterTable['("ESE_5700" "my_nor" "symbol" )] =  56
+cellViewCounterTable['("ESE_5700" "my_inv" "symbol" )] =  43

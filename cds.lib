@@ -1,0 +1,27 @@
+# File created by Tania Khanna 
+
+### Cadence basic libs
+###
+#Define analogLib $CDSDIR/tools/dfII/etc/cdslib/artist/analogLib
+
+### GPDK kits libs
+###
+INCLUDE /lcars/software/linux/x86_64/ic-design/design_kits/gpdk045_v_6_0/cds.lib
+
+
+ 
+#Removed by ddDeleteObj: DEFINE ESE5700 /lcars/home/p/patel5/cadenceGPDK/ESE5700
+#Removed by ddDeleteObj: DEFINE ESE5720 /lcars/home/p/patel5/cadenceGPDK/ESE5720
+DEFINE ESE5720 /lcars/home/p/patel5/cadenceGPDK/ESE5720
+DEFINE self_practice /lcars/home/p/patel5/cadenceGPDK/self_practice
+DEFINE ESE5700 /lcars/home/p/patel5/cadenceGPDK/ESE5700
+DEFINE ESE_5700 /lcars/home/p/patel5/cadenceGPDK/ESE_5700
+DEFINE HW6_ESE_5700 /lcars/home/p/patel5/cadenceGPDK/HW6_ESE_5700
+#Removed by ddDeleteObj: DEFINE HW7 /lcars/home/p/patel5/cadenceGPDK/HW7
+DEFINE HW7_ESE_5700 /lcars/home/p/patel5/cadenceGPDK/HW7_ESE_5700
+#Removed by ddDeleteObj: DEFINE ESE_500_Project_1 /lcars/home/p/patel5/cadenceGPDK/ESE_500_Project_1
+DEFINE ESE_5700_Project_1 /lcars/home/p/patel5/cadenceGPDK/ESE_5700_Project_1
+#Removed by ddDeleteObj: DEFINE ESE_5720_prject /lcars/home/p/patel5/cadenceGPDK/ESE_5720_prject
+DEFINE ESE_5720_Project /lcars/home/p/patel5/cadenceGPDK/ESE_5720_Project
+DEFINE ESE_5700_Project_2 /lcars/home/p/patel5/cadenceGPDK/ESE_5700_Project_2
+DEFINE ESE5760 /lcars/home/p/patel5/cadenceGPDK/ESE5760

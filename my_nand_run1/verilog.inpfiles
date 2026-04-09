@@ -1,0 +1,19 @@
+// Verilog HDL and netlist files of
+// "ESE_5700 my_nand functional"
+
+// HDL models
+
+// HDL file for ESE_5700, my_nand, functional.
+/lcars/home/p/patel5/cadenceGPDK/ESE_5700/my_nand/functional/verilog.v
+
+
+
+// End HDL models
+
+// Netlisted models
+
+// netlist file - ESE_5700, my_nand, functional.
+ihnl/cds0/netlist
+
+
+// End HDL models

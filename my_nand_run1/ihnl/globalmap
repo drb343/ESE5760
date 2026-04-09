@@ -1,0 +1,8 @@
+CADENCE IHNL11140
+$model
+ESE_5700/my_nand/functional my_nand
+$endmodel
+$net
+$endnet
+$param
+$endparam

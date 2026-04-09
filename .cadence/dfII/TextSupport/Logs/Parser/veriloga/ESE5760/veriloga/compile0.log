@@ -1,0 +1,20 @@
+
+Warning from spectre during AHDL compile.
+    WARNING (VACOMP-1146):
+        "/lcars/home/p/patel5/cadenceGPDK/ESE5760/RRAM/veriloga/veriloga.va",
+        line 7: (Non-portable Syntax) Cadence strongly recommends putting the
+        direction specifier for port `t' before declaring its discipline.
+    WARNING (VACOMP-1146):
+        "/lcars/home/p/patel5/cadenceGPDK/ESE5760/RRAM/veriloga/veriloga.va",
+        line 7: (Non-portable Syntax) Cadence strongly recommends putting the
+        direction specifier for port `b' before declaring its discipline.
+    WARNING (VACOMP-1127):
+        "/lcars/home/p/patel5/cadenceGPDK/ESE5760/RRAM/veriloga/veriloga.va",
+        line 151: (Archaic Syntax) Does not comply with the Accellera
+        Verilog-AMS 2.0 Standard and beyond. To comply with the current
+        standard, replace `$dist_normal' with `$rdist_normal'.
+    WARNING (VACOMP-1127):
+        "/lcars/home/p/patel5/cadenceGPDK/ESE5760/RRAM/veriloga/veriloga.va",
+        line 159: (Archaic Syntax) Does not comply with the Accellera
+        Verilog-AMS 2.0 Standard and beyond. To comply with the current
+        standard, replace `$dist_normal' with `$rdist_normal'.

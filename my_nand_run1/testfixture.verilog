@@ -1,0 +1,18 @@
+
+// Verilog stimulus file.
+// Please do not create a module in this file.
+
+
+// Default verilog stimulus. 
+
+initial
+begin 
+
+   i1 = 1'b0;
+   i2 = 1'b0;
+#25 i1 = 1'b0; i2 = 1'b0;
+#25 i1 = 1'b0; i2 = 1'b1;
+#25 i1 = 1'b1; i2 = 1'b0;
+#25 i1 = 1'b1; i2 = 1'b1;
+#25 $finish;
+end 

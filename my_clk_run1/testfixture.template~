@@ -1,0 +1,23 @@
+
+`timescale 1ns / 1ns
+
+module test;
+
+
+wire  Q;
+
+reg  CLKin, D;
+
+
+
+my_d_flip_flop top(Q, D, CLKin); 
+ 
+
+`ifdef verilog
+
+ //please enter any additional verilog stimulus in the /lcars/home/p/patel5/cadenceGPDK/my_clk_run1/testfixture.verilog file
+`include "/lcars/home/p/patel5/cadenceGPDK/my_clk_run1/testfixture.verilog"
+
+`endif
+
+endmodule 

@@ -1,0 +1,19 @@
+--pcdbVlog file, Rev:1.0
+
+#CELL
+* my_inv *
+my_inv0
+
+#CELL
+* my_xor *
+my_xor0
+my_xor1
+
+#CELL
+* my_nand *
+my_nand0
+my_nand4
+my_nand3
+my_nand2
+my_nand1
+

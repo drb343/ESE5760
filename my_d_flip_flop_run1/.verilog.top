@@ -1,0 +1,14 @@
+
+`timescale 1ns / 1ns
+
+module test;
+
+
+wire  Q;
+
+reg  CLK1, CLK1_, D;
+
+
+
+my_d_flip_flop top(Q, D, CLK1, CLK1_); 
+ 
