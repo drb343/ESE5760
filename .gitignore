@@ -1,0 +1,7 @@
+*.oa
+*.bak
+*.cdslck*
+thumbnail_128x128.png
+netlist.oa
+master.tag
+data.dm
