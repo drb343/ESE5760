@@ -6,11 +6,11 @@
 LockStakeVersion               1.1
 LoginName                      patel5
 HostName                       big10.seas.upenn.edu
-ProcessIdentifier              367632
-ProcessCreationTime_UTC        1775422923
-ProcessCreationTime_Readable   Sun Apr  5 17:02:03 2026 EDT
+ProcessIdentifier              615923
+ProcessCreationTime_UTC        1775678129
+ProcessCreationTime_Readable   Wed Apr  8 15:55:29 2026 EDT
 AppIdentifier                  OA File System Design Manager
 OSType                         unix
 ReasonForPlacingEditLock       OpenAccess edit lock
-FilePathUsedToEditLock         /lcars/home/p/patel5/cadenceGPDK/ESE5760/RRAM_test/schematic/sch.oa.cdslck
-TimeEditLocked                 Sun Apr  5 17:05:02 2026 EDT
+FilePathUsedToEditLock         /lcars/home/p/patel5/cadenceGPDK/ESE5760/RRAM_test/schematic/sch.oa.cdslck.dirlck
+TimeEditLocked                 Wed Apr  8 16:39:27 2026 EDT
