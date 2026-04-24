@@ -25,3 +25,5 @@ DEFINE ESE_5700_Project_1 /lcars/home/p/patel5/cadenceGPDK/ESE_5700_Project_1
 DEFINE ESE_5720_Project /lcars/home/p/patel5/cadenceGPDK/ESE_5720_Project
 DEFINE ESE_5700_Project_2 /lcars/home/p/patel5/cadenceGPDK/ESE_5700_Project_2
 DEFINE ESE5760 /lcars/home/p/patel5/cadenceGPDK/ESE5760
+DEFINE ESE5760_FINAL_PROJECT /lcars/home/p/patel5/cadenceGPDK/ESE5760_FINAL_PROJECT
+DEFINE PMAMTJ40_4_5 /lcars/home/p/patel5/PMAMTJ40_4_5-main

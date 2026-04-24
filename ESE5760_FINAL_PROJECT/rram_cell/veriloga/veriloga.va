@@ -1,0 +1,76 @@
+// VerilogA for ESE5760_FINAL_PROJECT, rram_cell, veriloga
+
+`include "constants.vams"
+`include "disciplines.vams"
+
+module rram_cell(TE, BE);
+	inout TE, BE;
+	electrical TE, BE;
+
+	// ---- Parameters: material properties ----
+    parameter real tox    = 5.0e-9;    // oxide thickness [m]
+    parameter real a0     = 0.25e-9;   // ion hopping distance [m]
+    parameter real Ea     = 1.501;     // activation energy [eV]
+    parameter real v0     = 150.0;     // ion velocity prefactor [m/s]
+    parameter real gamma0 = 16.5;      // field enhancement factor
+    parameter real g0     = 0.25e-9;   // tunneling decay length [m]
+    parameter real I0     = 1.0e-5;   // current prefactor [A]
+    parameter real V0     = 0.25;      // voltage scaling [V]
+    parameter real Rth    = 2.1e3;     // thermal resistance [K/W]
+    parameter real T0     = 300.0;     // ambient temperature [K]
+
+    // ---- Gap limits ----
+    parameter real g_ini  = 1.2e-9;    // initial gap, starts in HRS [m]
+    parameter real g_min  = 0.05e-9;    // minimum gap, fully LRS [m]
+    parameter real g_max  = 1.2e-9;    // maximum gap, fully HRS [m]
+
+	// ---- Internal variables ----
+    real g;          // filament gap [m]
+    real T;          // local temperature [K]
+    real I_calc;     // current through device [A]
+    real dg_dt;      // rate of gap change [m/s]
+    real gamma_val;  // field enhancement
+    real Ea_J;       // activation energy converted to Joules
+    real arg;        // argument of sinh in gap equation (for clamping)
+
+	analog begin
+
+        // ---- Initialize gap at start ----
+        @(initial_step) begin
+            g = g_ini;
+        end
+
+        // ---- Equation 3: field enhancement ----
+        gamma_val = gamma0;
+
+        // ---- Equation 1: current (uses current g) ----
+        I_calc = I0 * exp(-g/g0) * sinh(V(TE,BE)/V0);
+
+        // ---- Equation 4: temperature ----
+        T = T0 + I_calc * V(TE,BE) * Rth;
+        if (T < T0) T = T0;
+
+        // ---- Equation 2: gap dynamics ----
+        Ea_J = Ea * `P_Q;
+        arg  = gamma_val * (a0/tox) * (`P_Q * V(TE,BE)) / (`P_K * T);
+        if (arg >  100.0) arg =  100.0;
+        if (arg < -100.0) arg = -100.0;
+
+        dg_dt = -v0 * exp(-Ea_J / (`P_K * T)) * sinh(arg);
+
+        // ---- Clamp rate at physical limits ----
+        if ((g <= g_min) && (dg_dt < 0)) dg_dt = 0;
+        if ((g >= g_max) && (dg_dt > 0)) dg_dt = 0;
+
+        // ---- Integrate gap ----
+        g = idt(dg_dt, g_ini);
+
+        // ---- Hard clamp gap after integration ----
+        if (g < g_min) g = g_min;
+        if (g > g_max) g = g_max;
+
+        // ---- Apply current ----
+        I(TE,BE) <+ I_calc;
+
+    end
+endmodule

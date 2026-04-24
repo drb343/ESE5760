@@ -1,0 +1,14 @@
+# Cadence simulation outputs
+*.log
+*.err
+*.ahdlSimDB
+xcelium.d/
+.simvision/
+simulation/
+psf/
+# Cadence lock files
+*.cdslck
+.cdslck
+# Auto-generated
+.lastgoodrun
+*.swp
