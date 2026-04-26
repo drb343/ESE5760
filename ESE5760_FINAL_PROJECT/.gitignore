@@ -1,0 +1,7 @@
+# Cadence lock files
+*.cdslck*
+# Cadence history and UI state
+../.cadence/dfII/history/
+../.cadence/dfII/viva/
+# CSV simulation outputs (optional - remove if you want these tracked)
+*.csv
